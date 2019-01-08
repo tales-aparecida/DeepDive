@@ -1,51 +1,57 @@
 # Data storage models
 
-## SQL vs NoSQL
+One important part of analysing data is where and how to store it. Many variables should be considered to make a choice,and each use case might require a different kind of storage, but knowledge is a great one to start, given that knowing full well how to use your tools can take you beyond the freshest _buzzwordy_ ones, influencing in other variables like efficiency, learning curve, coding speed and storage footprint, for example.
 
-|  SQL            | noSQL |
-|  ---            |  ---  |
-| Strong Schema   | Heterogeneous data |
-| Tables          | Collections        |
-| Rows            | Documents          |
-| Join/Relations  | Duplication        |
-| Split between tables |  |
+Here we will focus on some storage models and show some of their implementions on the market. Let's start talking about the most widespread model for the last 40 years.
+
+### Languages 
+#### Cypher
+#### Gremlin
+#### SPARQL
+
+## SQL or Relational Database Model System (RDBMS)
+Often refered as SQL Databases, relational databases were conceived in the 70's by _E. F. Codd_, based on mathematical set theory, and soon managed by Structured Query Language (SQL). RDBMS. SQL, as the name implies, is just a instruction set to create querys to interact with data models, but, as it was used by most RDBMSs, it ended up naming the category.
+
+- Strong typed static schema
+- Tables (rows and columns)
+- Relationships
+- Joins
+- Indexes
+- Triggers, Constraints and Views
 
 
-### SQL or Relational Database Model System
-Often refered as SQL Databases, relational databases were conceived in the 70's by E. F. Codd, based on mathematical set theory, and soon defined by the Structured Query Language (SQL). RDBMS 
+## NoSQL
 
-
-### NoSQL
+Despite the name, currently NoSQL is, more ofter than not, expanded to _Not Only SQL_, which is 
 
 Reduce amount of inserts. 
-Offers horizontal scalability (multiple data servers).
+Offers horizontal scalability (multiple data servers) given the lack of joins (data duplication).
 Loss of data consistency (not ACID).
 
-## Relational tables, column family, document-orientad, graph
+### Key-Value pairs
 
-### 
+### Wide-column
+
+
+### Document-oriented
+
 #### MongoDB
 The most popular NoSQL database, it's a document-oriented one
+
 #### Amazon DynamoDB
 A cloud based NoSQL database, that supports both key-value and document models and also has a library for geospatial indexing.
+
 
 ### Graph databases
 
 Besides relational and analytical databases there is another popular data storage: Graph databases.
 Those are kind of intermediary, as they do not have schemas but they are based around relationships between objects, the diffenrence, thoughm is that instead of joining normalized tables the graph db stores the relationship inside the object, which allows for quick queries. 
 
-### Popular Databases
 #### Neo4j
 #### Microsoft Azure Cosmos DB
 #### JanusGraph
 #### TigerGraph
 Parallelization to reach beyond two hops
-
-
-### Languages 
-#### Cypher
-#### Gremlin
-#### SPARQL
 
 
 ## Hybrid / Multi-model
@@ -54,6 +60,16 @@ F1, by Google, is a hybrid database that combines high availability, the scalabi
 
 ### ArangoDB
 Shown as a great option performance-wise by their benchmark tests, ArangoDB is a multi-model database, working well when compared to Postgres and MongoDB.
+
+## Outline
+
+|  SQL (relational)           | noSQL |
+|  ---            |  ---  |
+| Strong Schema   | Heterogeneous data |
+| Tables          | Collections        |
+| Rows            | Documents          |
+| Join/Relations  | Duplication        |
+| Split between tables |  |
 
 ## References 
 https://youtu.be/ZS_kXvOeQ5Y
