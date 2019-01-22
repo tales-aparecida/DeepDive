@@ -7,18 +7,46 @@ Here will be listed some of the popular database paradygms, along with their wel
 ## SQL or Relational Database Model System (RDBMS)
 Often refered as SQL Databases, relational databases were conceived in the 70's by _E. F. Codd_, based on mathematical set theory, soon assisted by Structured Query Language (SQL), which, as the name implies, is a language definition to create querys to interact with data in four ways, with what could be called sub-languages: data query language (DQL), a data definition language (DDL), a data control language (DCL), and a data manipulation language (DML). As it has been around for almost as long as RDBMS, it ended up naming the category.
 
-RDBMS is modeled as tables, made from homogeneous rows, that is, row with the same strongly typed columns.
-- Strong typed static schema
-- Tables (rows and columns)
-- Relationships
-- Joins
-- Indexes
-- Triggers, Constraints and Views
+RDBMS are modeled as tables, made from homogeneous rows, that is, rows with the same strongly-typed columns. Each table usually represents a real world entity or concept, so, in order to retrieve some useful information from the database we must cross data between tables, and that is achieved by the **Join** clause.
+
+Mentioning this clause first was completely intentional, even if a little non-didatic, because that is one of the main differences of RDBMS and non-relational DBs, the relationship.
+
+Let's model a simple example based on the \*[W3 schools SQL course](https://www.w3schools.com/sql). Say we have a trading store where we register who bought what from whom, so, a simple RDBMS model would have three main tables:
+
+- Customer(CustomerID, CustomerName)
+- Product(ProductID, Price, ProductName)
+- Employee(EmployeeID, EmployeeName)
+
+Pretty straight forward, right? Customer and Seller have two columns whilst Item has three. In order to actually store a trade, though, we need another table that links our entities:
+
+- Order(CustomerID, ProductID, EmployeeID)
+
+So, our resulting query would look something like this:
+
+```sql
+SELECT EmployeeName, CustomerName, ProductName, Price
+FROM (((Orders
+INNER JOIN Customer ON Orders.CustomerID = Customer.CustomerID)
+INNER JOIN Employee ON Orders.EmployeeID = Employee.EmployeeID)
+INNER JOIN Product  ON Orders.ProductID  = Product.ProductID)
+```
+
+We could create indexes on the IDs and optimize this query, but in the end we would still need to reach four tables and cross their data. One may argue that we could save all to just one table, but that would be an antipattern, as RDBMS focus on ACID.
+
+// Paragrafo explicando ACID e LOCKS 
 
 
-## NoSQL
+To summarize, RDMBS have:
 
-Despite the name, currently NoSQL is, more ofter than not, expanded to _Not Only SQL_, which is 
+- Strong typed and static schema  
+- Tables (rows and columns)  
+- Relationships between entities connected through Joins
+- Indexes  
+- Triggers, Constraints and Views  
+
+
+## NoSQL or non-relation databases
+
 
 Reduce amount of inserts. 
 Offers horizontal scalability (multiple data servers) given the lack of joins (data duplication).
@@ -37,6 +65,8 @@ Loss of data consistency, as it is not ACID (Atomicity, Consistency, Isolation, 
 The most popular NoSQL database, and the fourth overall is a document-oriented one. It has great writing and reading times, as some benchmarks show, but it can't always give consistency on models that have explicit relationships, which would have data redundancy.
 
 MongoDB has a limited left outer join as of 3.2, while most of RDBMS implementations have at least four types of join operations: inner join, left outer join, right outer join and full outer join.
+
+##### Shard key
 
 #### Amazon DynamoDB
 A cloud based NoSQL database, that supports both key-value and document models and also has a library for geospatial indexing.
@@ -85,6 +115,19 @@ https://history-computer.com/ModernComputer/Software/Codd.html
 https://www.researchgate.net/publication/314639479_Comparison_of_Relational_Document_and_Graph_Databases_in_the_Context_of_the_Web_Application_Development
 https://en.wikipedia.org/wiki/Unstructured_data
 http://www.sarahmei.com/blog/2013/11/11/why-you-should-never-use-mongodb/
+https://hackernoon.com/mongodb-indexes-and-performance-2e8f94b23c0a
+
+*
+The actual query on w3schoolds would be:
+
+```sql
+SELECT FirstName + " " + LastName AS EmployeeName, CustomerName, ProductName, Price
+FROM ((((Orders
+INNER JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID)
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+INNER JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID)
+INNER JOIN Products ON OrderDetails.ProductID = Products.ProductID);
+```
 
 ### Languages 
 #### Cypher
